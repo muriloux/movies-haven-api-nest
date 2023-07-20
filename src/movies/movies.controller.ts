@@ -16,8 +16,13 @@ export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
   @Post()
-  create(@Body() createMovieDto: CreateMovieDto) {
-    return this.moviesService.create(createMovieDto);
+  create(@Body() movie: CreateMovieDto) {
+    return this.moviesService.create(movie);
+  }
+
+  @Post('/bulk')
+  createMany(@Body() movies: { movies: CreateMovieDto[] }) {
+    return this.moviesService.createMany(movies);
   }
 
   @Get()
@@ -39,4 +44,5 @@ export class MoviesController {
   remove(@Param('id') id: string) {
     return this.moviesService.remove(+id);
   }
+  createMovieDto;
 }

@@ -7,12 +7,20 @@ import { PrismaService } from '../prisma/prisma.service';
 export class MoviesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createMovieDto: CreateMovieDto) {
-    return this.prisma.movie.create({ data: createMovieDto });
+  create(movie: CreateMovieDto) {
+    return this.prisma.movie.create({ data: movie });
+  }
+
+  async createMany(moviesDto: { movies: CreateMovieDto[] }) {
+    const { movies } = moviesDto;
+    const createManyPromises = movies.map((movie) => {
+      return this.create(movie);
+    });
+    return Promise.all(createManyPromises);
   }
 
   findAll() {
-    return `This action returns all movies`;
+    return this.prisma.movie.findMany();
   }
 
   findOne(id: number) {
