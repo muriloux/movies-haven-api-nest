@@ -24,14 +24,23 @@ export class MoviesService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} movie`;
+    return this.prisma.movie.findUnique({
+      where: { id },
+    });
   }
 
   update(id: number, updateMovieDto: UpdateMovieDto) {
-    return `updated`;
+    const { title } = updateMovieDto;
+
+    return this.prisma.movie.update({
+      where: {
+        id: id,
+      },
+      data: { title: title },
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} movie`;
+    return this.prisma.movie.delete({ where: { id } });
   }
 }
