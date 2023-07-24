@@ -3,6 +3,7 @@
 export class CreateMovieDto {
   //@IsNotEmpty()
   //@IsString()
-  id: number;
+  id: string;
   title: string;
+  curatorName: string;
 }

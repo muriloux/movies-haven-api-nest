@@ -10,12 +10,18 @@ datasource db {
 }
 
 model Movie {
-  id        Int      @id @map("_id")
-  title     String   @unique
-  createdAt DateTime @default(now())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  title        String   @unique
+  curatorName  String
+  createdAt    DateTime @default(now())
+
+  curator      Curator  @relation(fields: [curatorName], references: [name])
 }
 
 model Curator {
-  id        Int     @id @map("_id")
-  name      String  @unique
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String   @unique
+  createdAt    DateTime @default(now())
+
+  Movie Movie[]
 }
